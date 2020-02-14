@@ -1,52 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dodaj studenta</title>
+<?php 
  
-    <style type="text/css">
-        fieldset {
-            margin: auto;
-            margin-top: 100px;
-            width: 50%;
-        }
+require_once 'db_connect.php';
  
-        table tr th {
-            padding-top: 20px;
-        }
-    </style>
+if($_POST) {
+    $ime = $_POST['ime'];
+    $prezime = $_POST['prezime'];
+    $godine = $_POST['godine'];
+    $kontakt = $_POST['kontakt'];
  
-</head>
-<body>
+    $sql = "INSERT INTO members (ime, prezime, kontakt, godine, status) VALUES ('$ime', '$prezime', '$kontakt', '$godine', 1)";
+    if($connect->query($sql) === TRUE) {
+        echo "<p>Novi student je uspesno dodat</p>";
+        echo "<a href='../create.php'><button type='button'>Nazad</button></a>";
+        echo "<a href='../index.php'><button type='button'>Pocetna</button></a>";
+    } else {
+        echo "Error " . $sql . ' ' . $connect->connect_error;
+    }
  
-<fieldset>
-    <legend>Dodaj studenta</legend>
+    $connect->close();
+}
  
-    <form action="php_akcije/novo.php" method="post">
-        <table cellspacing="0" cellpadding="0">
-            <tr>
-                <th>Ime</th>
-                <td><input type="text" name="ime" placeholder="Vase ime" /></td>
-            </tr>     
-            <tr>
-                <th>Prezime</th>
-                <td><input type="text" name="prezime" placeholder="Vase prezime" /></td>
-            </tr>
-            <tr>
-                <th>Godina upisa</th>
-                <td><input type="text" name="godine" placeholder="Godina upisa studija" /></td>
-            </tr>
-            <tr>
-                <th>Kontakt</th>
-                <td><input type="text" name="kontakt" placeholder="Kontakt telefon" /></td>
-            </tr>
-            <tr>
-                <td><button type="submit">Sacuvaj izmene</button></td>
-                <td><a href="index.php"><button type="button">Nazad</button></a></td>
-            </tr>
-        </table>
-    </form>
- 
-</fieldset>
- 
-</body>
-</html>
+?>
